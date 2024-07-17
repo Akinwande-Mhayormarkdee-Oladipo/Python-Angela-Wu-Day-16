@@ -26,15 +26,12 @@ from coffee_maker import CoffeeMaker
 from money_machine import MoneyMachine
 
 print("Welcome!")
-
-latte = MenuItem("latte", 100, 100, 16, 5.5)
-espresso = MenuItem("espresso", 100, 70, 25,4.0)
-cappuccino = MenuItem("cappuccino", 100, 70, 10, 3.0)
-
+menu = Menu()
 
 is_on = True
 while is_on:
-    drink_type = input("Enter your coffee order: ").lower()
+    options = menu.get_items()
+    drink_type = input(f"Enter your coffee order from ({options}): ").lower()
     print(drink_type)
     available_orders = Menu()
     coffee_machine = CoffeeMaker()
@@ -64,14 +61,7 @@ while is_on:
             print("Available resources are not sufficient")
             is_on = False
             break
-
-        quarters = float(input('How many quarters?: '))
-        dimes = float(input('How many dimes?: '))
-        nickels = float(input('How many nickels?: '))
-        pennies = float(input('How many pennies?: '))
-
-        total_amount = 0.25*quarters + 0.10*dimes + 0.05*nickels + 0.01*pennies
-        enough_amount = available_money.make_payment(total_amount)
+        enough_amount = available_money.make_payment(current_order.cost)
         if enough_amount:
             coffee_machine.make_coffee(current_order)
             print("Order Processed!\n\n")
